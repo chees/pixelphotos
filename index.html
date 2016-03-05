@@ -5,8 +5,9 @@
   <style>
 body {
   margin: 0;
-  background: url(dog.jpg) no-repeat center center fixed;
+  background: url(img/1.jpg) no-repeat center center fixed;
   background-size: cover;
+  overflow: hidden;
 }
   </style>
 </head>
@@ -14,26 +15,37 @@ body {
 <canvas width="600" height="400"></canvas>
 <script>
 var images = [
-  'dog.jpg',
-  'cat.jpg'
+  'img/1.jpg',
+  'img/2.jpg',
+  'img/3.jpg',
+  'img/4.jpg',
+  'img/5.jpg',
+  'img/6.jpg',
+  'img/7.jpg',
+  'img/8.jpg',
+  'img/9.jpg',
 ];
+
+var delay = location.search.split('=')[1] || 10;
 
 var canvas = document.querySelector('canvas')
 canvas.width = document.body.scrollWidth;
 canvas.height = document.body.scrollHeight;
+console.log(canvas.height);
 var ctx = canvas.getContext('2d');
 ctx.fillStyle = '#000000';
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-var pixels = canvas.width * canvas.height;
 function draw() {
-  ctx.clearRect(
-    Math.floor(Math.random() * canvas.width),
-    Math.floor(Math.random() * canvas.height),
-    Math.floor(Math.random() * 25),
-    Math.floor(Math.random() * 25));
+  for (var i = 0; i < 5; i++) {
+    ctx.clearRect(
+      Math.floor(Math.random() * canvas.width),
+      Math.floor(Math.random() * canvas.height),
+      Math.floor(Math.random() * 25),
+      Math.floor(Math.random() * 25));
+  }
   if (state == 'drawing') {
-    setTimeout(draw, pixels/ 50000);
+    setTimeout(draw, delay);
   }
 }
 
@@ -48,6 +60,10 @@ document.body.addEventListener('click', function() {
 
 document.body.addEventListener('keydown', function() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+  if (image >= images.length - 1) {
+    document.body.style.backgroundImage = 'url()';
+    return;
+  }
   image++;
   document.body.style.backgroundImage = 'url(' + images[image] + ')';
   state = 'drawing';
